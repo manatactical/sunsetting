@@ -681,7 +681,7 @@ h2 {
       <p class="subhead">A free menu-bar app that dims, warms and schedules every display on your Mac.</p>
       <div class="cta">
         <a class="btn btn-primary" href="https://github.com/manatactical/sunsetting/releases/latest/download/Sunsetting.dmg">Download for Mac</a>
-        <p class="sublabel">Free · macOS 15 or later · v1.0</p>
+        <p class="sublabel">Free · macOS 15 or later · <span id="app-version">v1.2</span></p>
       </div>
       <a class="text-link" href="https://ko-fi.com/artywal" target="_blank" rel="noopener">Support on Ko-fi ›</a>
 
@@ -932,6 +932,12 @@ h2 {
 </footer>
 
 <script>
+// Show the latest release tag; the static text is the fallback if GitHub is unreachable or rate-limited.
+fetch("https://api.github.com/repos/manatactical/sunsetting/releases/latest")
+  .then(r => r.ok ? r.json() : null)
+  .then(r => { if (r && r.tag_name) document.getElementById("app-version").textContent = r.tag_name; })
+  .catch(() => {});
+
 (() => {
   // Same model as Brightness.swift: 16-step grid, bands at least 2 steps wide.
   const STEPS = 16, GAP = 2, W_STEPS = 35, NEUTRAL_K = 6500, WARMEST_K = 3000;
